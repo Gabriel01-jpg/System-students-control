@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@types/react-text-mask": "^5.4.11",
+    "react-text-mask": "^5.4.3",
+    "text-mask-addons": "^3.8.0"
+  },
+  "devDependencies": {
+    "@types/text-mask-addons": "^3.8.1"
+  }
+}
