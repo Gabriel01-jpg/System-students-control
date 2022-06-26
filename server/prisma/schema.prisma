@@ -12,7 +12,7 @@ model Courses {
   id                  String       @id @default(uuid())
   createdAt           DateTime     @default(now())
   name                String
-  valor_mensalidade   String
+  valor_mensalidade   Decimal
   tipo_curso          String
 
   @@map("courses")

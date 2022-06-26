@@ -1,4 +1,4 @@
-import { Flex, useBreakpointValue, IconButton, Icon, Heading } from "@chakra-ui/react";
+import { Flex, useBreakpointValue, IconButton, Icon, Heading, Text } from "@chakra-ui/react";
 import { RiMenuLine } from "react-icons/ri";
 import { useSidebarDrawer } from "../../context/SidebarDrawerContext";
 
@@ -36,6 +36,7 @@ export function Header() {
       )}
 
       <Logo />
+     {/*  <Text fontSize="xl">Stu.Control</Text> */}
 
 
       <Flex align="center" ml="auto">

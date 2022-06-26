@@ -21,7 +21,6 @@ export class SignInAdminUseCase{
         if(!user){
             throw new Error('Usuário ou senha inválida!');
         }
-        console.log(user);
         const passwordMatch = await compare(password, user.password);
         console.log(passwordMatch);
         if(!passwordMatch){

@@ -98,6 +98,7 @@ export default function Files() {
                     <Th>Tipo</Th>
                     {isWideVersion && <Th>Modulo</Th>}
                     {isWideVersion && <Th>Data de cadastro</Th>}
+                    <Th></Th>
                 </Tr>
                 </Thead>
                 <Tbody>

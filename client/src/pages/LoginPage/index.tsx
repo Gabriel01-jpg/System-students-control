@@ -1,10 +1,13 @@
-import { Box, Button, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, Link, Stack, useToast } from "@chakra-ui/react"
+import { Box, Button, Divider, Flex, FormControl, FormErrorMessage, Icon, Input, InputGroup, InputLeftElement, Link, Stack, Text, useToast } from "@chakra-ui/react"
+
+import { AiOutlineMail } from 'react-icons/ai'
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { api } from "../../services/api";
 import { setCookie } from "nookies";
+import { RiLock2Fill } from "react-icons/ri";
 
 
 const schema = yup.object({
@@ -91,24 +94,47 @@ const LoginPage = () => {
                 justify="center"
                 
             >
-                <Stack spacing="6" as="form" py="12" px={["8", "6"]} bgColor="#D3D3D3" borderRadius="14" onSubmit={onSubmit}>
-                    <FormControl alignItems="center" isInvalid={errors.email}>
-                        <FormLabel htmlFor='user' fontSize="lg" fontFamily="body">Usuário: </FormLabel>
-                        <Input id='user' type='user' fontFamily="body" borderColor="gray.500" borderWidth="2" bg="#FFF" {...register('email')}/>
-                        {errors.email && (<FormErrorMessage color="red">{errors.email.message}</FormErrorMessage>)}
-                    </FormControl>
+                <Box bgColor="gray.50" borderRadius="14" p="4" borderWidth={1} borderColor="gray.300">
+                    <Text align="center" fontWeight="bold" fontSize="2xl" mt="2">Bem-vindo!</Text>
+                    <Text align="center" fontSize="md" mt="2">Faça login com sua conta.</Text>
+                    <Stack spacing="4" as="form" py="8" px={["4", "8"]} onSubmit={onSubmit}>
+                        <FormControl alignItems="center" isInvalid={errors.email}>
+                            <InputGroup display="flex" flexDirection="column">
+                            <InputLeftElement
+                                pointerEvents='none'
+                                children={<Icon as={AiOutlineMail} color="gray.400"/>}
+                                />
+                                <Input placeholder="Email" id='user' type='user' variant="flushed" bgColor="blue.50" fontFamily="body" borderColor="gray.500" borderWidth="2" bg="#FFF" {...register('email')}/>
+                            {errors.email && (<FormErrorMessage color="red">{errors.email.message}</FormErrorMessage>)}
+                            </InputGroup>
+                        </FormControl>
 
-                    <FormControl alignItems="center" isInvalid={errors.password}>
-                        <FormLabel htmlFor='password' fontSize="lg" fontFamily="body">Senha: </FormLabel>
-                        <Input id='password' type='password' fontFamily="body" borderColor="gray.500" borderWidth="2" bg="#FFF" {...register('password')}/>
-                        {errors.password && (<FormErrorMessage color="red">{errors.password.message}</FormErrorMessage>)}
-                    </FormControl>
-                    <Box alignSelf="flex-end">
-                        <Button type="submit" fontFamily="body" bg="#FFA500" color="white" isLoading={isSubmitting}>ENTRAR</Button>
-                    </Box>
-                    
-                </Stack>
-                <Link alignSelf="center" mt="4">Esqueci minha senha.</Link>
+                        <FormControl alignItems="center" isInvalid={errors.password}>
+                        <InputGroup display="flex" flexDirection="column">
+                            <InputLeftElement
+                                pointerEvents='none'
+                                children={<Icon as={RiLock2Fill} color="gray.400"/>}
+                                />
+                                <Input placeholder="Senha" id='password' type='password' variant="flushed" bgColor="blue.50" fontFamily="body" borderColor="gray.500" borderWidth="2" bg="#FFF" {...register('password')}/>
+                                {errors.password && (<FormErrorMessage color="red">{errors.password.message}</FormErrorMessage>)}
+                            </InputGroup>
+                            
+                        </FormControl>
+                        <Flex w="100%" flexDirection="column">
+                            <Button type="submit" fontFamily="body" colorScheme="facebook" color="white" isLoading={isSubmitting}>Login</Button>
+                            <Link alignSelf="center" mt="3" fontSize="sm">Esqueci minha senha.</Link>
+                        </Flex>
+                        <Divider />
+                        <Text align="center"> Ou fazer login com</Text>
+                        <Flex justify="center">
+                            <Button fontFamily="body" colorScheme="red" color="white">Google</Button>
+                        </Flex>
+                        
+                    </Stack>
+                   
+
+                </Box>
+                
                 
 
 

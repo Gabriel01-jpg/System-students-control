@@ -4,14 +4,19 @@ interface GetUserInformationsProps {
     userId: string;
 }
 
-type Token = string;
-
 export class GetUserInformationsUseCase{
     async execute({ userId }: GetUserInformationsProps){
 
         const user = await prisma.users.findFirst({
             where: {
                 id: userId
+            },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                surname: true,
+
             }
         });
 

@@ -1,13 +1,13 @@
 import axios, { AxiosError } from 'axios';
-/* import { parseCookies, setCookie, destroyCookie } from 'nookies'
+import { parseCookies } from 'nookies'
 
-const token = parseCookies(); */
+const token = parseCookies();
 
 export const api = axios.create({
     baseURL: 'http://localhost:3333',
-    /* headers: {
-        Authorization: `Bearer ${token.artec_token}`
-    } */
+    headers: {
+        Authorization: `Bearer ${token['artec.token']}`
+    }
 })
 
 /* api.interceptors.response.use(response => {

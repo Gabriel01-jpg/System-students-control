@@ -11,24 +11,83 @@ import {
     Th,
     Td,
     Checkbox,
-    Text,
     useBreakpointValue,
-    Spinner,
+    Link as ChakraLink,
+    Tooltip,
+    useDisclosure,
+    useToast,
   } from "@chakra-ui/react";
-import { RiAddLine, RiRefreshLine } from "react-icons/ri";
-import { useState } from "react";
+import { RiAddLine } from "react-icons/ri";
+import { useEffect, useState } from "react";
 
 import { Header } from "../../components/Header/Header";
 import Sidebar from "../../components/SideBar/SideBar";
 import { Link } from "react-router-dom";
+import { api } from "../../services/api";
+import { Axios } from "axios";
+import { IoMdRemoveCircleOutline } from "react-icons/io";
+import { ConfirmPopover } from "../../components/ConfirmPopover";
   
-  
-  export default function Courses() {
+interface CourseProps {
+    id: string;
+    name: string;
+    price: string;
+    type: string;
+    createdAt: string;
+}
+
+export default function Courses() {
+
+    const [courses, setCourses] = useState<CourseProps[]>([]);
 
     const isWideVersion = useBreakpointValue({
       base: false,
       lg: true,
     });
+
+
+    const toast = useToast()
+
+    useEffect(() => {
+        api.get('/courses').then(response => {
+            let { courses } = response.data;
+            setCourses(courses.map((course: any) => {
+                return {
+                    id: course.id,
+                    name: course.name,
+                    type: course.tipo_curso,
+                    price: Number(course.valor_mensalidade).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL', minimumFractionDigits: 2}),
+                    createdAt: new Date(course.createdAt).toLocaleString('pt-BR', { dateStyle: 'long' })
+                }
+            }));
+        })
+
+
+    }, [])
+
+    function removeItem(id: string){
+
+      api.delete(`/courses/${id}`).then(response => {
+        if(response.status == 200){
+          toast({
+              title: 'Curso excluído!',
+              description: "O curso foi excluído com sucesso.",
+              status: 'success',
+              duration: 9000,
+              isClosable: true,
+          })
+
+          const { deletedCourse } = response.data
+
+          setCourses(courses.filter(course => {
+            return course.id != deletedCourse.id
+          }))
+
+
+        }
+      })
+
+    }
     
     return (
       <Box>
@@ -55,82 +114,40 @@ import { Link } from "react-router-dom";
           
             <Table colorScheme="whiteAlpha">
                     <Thead>
-                    <Tr>
-                        <Th px={["4", "4,", "6"]} color="gray.300" width="8">
-                        <Checkbox colorScheme="blue" />
-                        </Th>
-                        <Th>Curso</Th>
-                        <Th>Mensalidade</Th>
-                        {isWideVersion && <Th>Tipo</Th>}
-                        {isWideVersion && <Th>Data de cadastro</Th>}
-                    </Tr>
+                        <Tr>
+                            <Th px={["4", "4,", "6"]} color="gray.300" width="8">
+                            <Checkbox colorScheme="blue" />
+                            </Th>
+                            <Th>Curso</Th>
+                            <Th>Mensalidade</Th>
+                            {isWideVersion && <Th>Tipo</Th>}
+                            {isWideVersion && <Th>Data de cadastro</Th>}
+                            <Th></Th>
+                        </Tr>
                     </Thead>
                     <Tbody>
-                        <Tr>
-                            <Td>
-                                <Checkbox colorScheme="blue" />
-                            </Td>
-                            <Td>
-                                Computação forense
-                            </Td>
-                            <Td>
-                                R$ 1.500
-                            </Td>
-                            {isWideVersion && <Td>R$ 1.500</Td>}
-                            {isWideVersion && <Td>Data de cadastro</Td>}
-                        </Tr>
-                        <Tr>
-                            <Td>
-                                <Checkbox colorScheme="blue" />
-                            </Td>
-                            <Td>
-                                Computação forense
-                            </Td>
-                            <Td>
-                                R$ 1.500
-                            </Td>
-                            {isWideVersion && <Td>R$ 1.500</Td>}
-                            {isWideVersion && <Td>Data de cadastro</Td>}
-                        </Tr>
-                        <Tr>
-                            <Td>
-                                <Checkbox colorScheme="blue" />
-                            </Td>
-                            <Td>
-                                Computação forense
-                            </Td>
-                            <Td>
-                                R$ 1.500
-                            </Td>
-                            {isWideVersion && <Td>R$ 1.500</Td>}
-                            {isWideVersion && <Td>Data de cadastro</Td>}
-                        </Tr>
-                        <Tr>
-                            <Td>
-                                <Checkbox colorScheme="blue" />
-                            </Td>
-                            <Td>
-                                Computação forense
-                            </Td>
-                            <Td>
-                                R$ 1.500
-                            </Td>
-                            {isWideVersion && <Td>R$ 1.500</Td>}
-                            {isWideVersion && <Td>Data de cadastro</Td>}
-                        </Tr>
-                        <Tr>
-                            <Td>
-                                <Checkbox colorScheme="blue" />
-                            </Td>
-                            <Td>
-                                Computação forense
-                            </Td>
-                            <Td>
-                                R$ 1.500
-                            </Td>
-                            {isWideVersion && <Td>R$ 1.500</Td>}
-                            {isWideVersion && <Td>Data de cadastro</Td>}
-                        </Tr>                     
+                        {courses.map(course => {
+                            return (
+                                <Tr key={course.id}>
+                                    <Td>
+                                        <Checkbox colorScheme="blue" />
+                                    </Td>
+                                    <Td>
+                                        {course.name}
+                                    </Td>
+                                    <Td>
+                                        {course.price}
+                                    </Td>
+                                    {isWideVersion && <Td>{course.type}</Td>}
+                                    {isWideVersion && <Td>{course.createdAt}</Td>}
+                                    <Td onClick={() => { removeItem(course.id) }}>
+                                        <Tooltip label="Excluir" aria-label='A tooltip' bg='red.600' fontSize='md'>
+                                          <ChakraLink><Icon as={IoMdRemoveCircleOutline} size="xl"/></ChakraLink>
+                                        </Tooltip>
+                                    </Td>
+                                </Tr>
+                            )
+                        })}                     
                     </Tbody>
                 </Table>
           </Box>

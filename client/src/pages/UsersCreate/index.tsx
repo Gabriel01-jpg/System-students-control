@@ -24,6 +24,8 @@ import { Header } from "../../components/Header/Header";
 import Sidebar from "../../components/SideBar/SideBar";
 import { Link } from "react-router-dom";
 import { api } from "../../services/api";
+import { useState } from "react";
+import { generateRandomPassword } from "../../utils/generateRandomPassword";
 
 const schema = yup.object({
     name: yup.string().required('Por favor, inserir um valor.'),
@@ -34,6 +36,8 @@ const schema = yup.object({
   
 export default function UsersCreate() {
 
+
+    const [ passwordValue, setPasswordValue ] = useState('');
     const { register, handleSubmit, formState:{ errors, isSubmitting}, reset } = useForm({
         resolver: yupResolver(schema)
     });
@@ -71,6 +75,12 @@ export default function UsersCreate() {
         })
     });
 
+    function handleSetPassword(){
+        const password = generateRandomPassword(12)
+        setPasswordValue(password);
+
+    }
+
     return (
       <Box>
         <Header />
@@ -106,11 +116,12 @@ export default function UsersCreate() {
                     </FormControl>
                     <FormControl isInvalid={errors.password}>
                         <FormLabel htmlFor='price'>Senha: </FormLabel>
-                        <Input id='password' type='text' bg="#FFF" {...register('password')}/>
+                        <Input id='password' type='text' bg="#FFF" {...register('password')} value={passwordValue}/>
                         {errors.password && (<FormErrorMessage color="red">{errors.password.message}</FormErrorMessage>)}
                         <Button
                                 mt={2}
                                 colorScheme='blue'
+                                onClick={() => { handleSetPassword() }}
                             >
                                 Gerar senha forte
                             </Button>

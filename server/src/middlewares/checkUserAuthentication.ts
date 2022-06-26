@@ -5,7 +5,7 @@ type Payload = {
     sub: string;
 }
 
-function checkUserAuthentication(request: Request, response: Response, next: NextFunction){
+export function checkUserAuthentication(request: Request, response: Response, next: NextFunction){
     const bearer = request.headers.authorization;
 
     if (!bearer) {

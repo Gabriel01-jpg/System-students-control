@@ -1,12 +1,16 @@
 import { Request, Response } from "express";
+import { GetUserInformationsUseCase } from "./GetUserInformationsUseCase";
 
 export class GetUserInformationsController{
     async handle(request: Request, response: Response){
-        const user = request.sub;
+        const userId = request.sub;
 
-        /* return response.json({
-            token
-        }) */
+        const getUserInformationsUseCase = new GetUserInformationsUseCase();
+        const user = await getUserInformationsUseCase.execute({ userId })
+
+        return response.json({
+            user
+        })
 
     }
 }

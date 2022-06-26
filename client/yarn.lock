@@ -2670,6 +2670,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-text-mask@^5.4.11":
+  version "5.4.11"
+  resolved "https://registry.yarnpkg.com/@types/react-text-mask/-/react-text-mask-5.4.11.tgz#dfbfc8642ee27977ed0cdfb1c61b53c85248c01c"
+  integrity sha512-DIJ3/dS4jd7NK3lEgsOwcgpp+ZlVrNJEiUDRayZRE/PNMbV/nLWmOKGdL0BUS29hnx0CDgITgPudKx0BgbF5fA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*":
   version "18.0.9"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.0.9.tgz"
@@ -2738,6 +2745,18 @@
   integrity sha512-oKZe+Mf4ioWlMuzVBaXQ9WDnEm1+umLx0InILg+yvZVBBDmzV5KfZyLrCvadtWcx8+916jLmHafcmqqffl+iIw==
   dependencies:
     "@types/jest" "*"
+
+"@types/text-mask-addons@^3.8.1":
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/@types/text-mask-addons/-/text-mask-addons-3.8.1.tgz#4968d8592ab3ab8b0fd3d877fbbe991c84d5c2a0"
+  integrity sha512-TD4Ifr3ZyWtyr1gOrNgCpa6RxXJ3M81YNzQq4p2pxOCeiIgHqAm4iisxmfHGhJG8+Zzad/yp4rxg349UMEWioA==
+  dependencies:
+    "@types/text-mask-core" "*"
+
+"@types/text-mask-core@*":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@types/text-mask-core/-/text-mask-core-5.1.1.tgz#8c699018b392940d8436734a5a564603d941a843"
+  integrity sha512-UixQLPJ5ulheZJkhpnEZMu0403jIVWXBM9EgfkXhuO9a/woVs9Bg9pebxB0dChI4DOxnQ5SR9bfRlaNMuDfXrg==
 
 "@types/trusted-types@^2.0.2":
   version "2.0.2"
@@ -7959,7 +7978,7 @@ prompts@^2.0.1, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.6.2, prop-types@^15.8.1:
+prop-types@^15.5.6, prop-types@^15.6.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -8253,6 +8272,13 @@ react-style-singleton@^2.2.0:
     get-nonce "^1.0.0"
     invariant "^2.2.4"
     tslib "^2.0.0"
+
+react-text-mask@^5.4.3:
+  version "5.4.3"
+  resolved "https://registry.yarnpkg.com/react-text-mask/-/react-text-mask-5.4.3.tgz#991efb4299e30c2e6c2c46d13f617169463e0d2d"
+  integrity sha512-IQ26CO6YMhc2FBRxLVnckBEDkuMvBQOiHBeAxWdZzoqMMOQvGG6vrVW1Rv6RtqOYsqVQaQd+6zYDW2tEM8VXxA==
+  dependencies:
+    prop-types "^15.5.6"
 
 react@^18.1.0:
   version "18.1.0"
@@ -9172,6 +9198,11 @@ test-exclude@^6.0.0:
     "@istanbuljs/schema" "^0.1.2"
     glob "^7.1.4"
     minimatch "^3.0.4"
+
+text-mask-addons@^3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/text-mask-addons/-/text-mask-addons-3.8.0.tgz#17b61ef665a4f36811f2ea1f01a223b4be61ab26"
+  integrity sha1-F7Ye9mWk82gR8uofAaIjtL5hqyY=
 
 text-table@^0.2.0:
   version "0.2.0"

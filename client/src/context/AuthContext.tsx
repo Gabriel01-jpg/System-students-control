@@ -1,10 +1,11 @@
-import { parseCookies } from "nookies";
+import { parseCookies, destroyCookie } from "nookies";
 import { userInfo } from "os";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import SignInRoutes from "../routes/SignInRoutes";
 import { api } from "../services/api";
 
 interface User {
+    id: string;
     name: string;
     surname: string;
     email: string;
@@ -36,14 +37,15 @@ export function AuthContextProvider({ children }: AuthContextProviderProps){
         const token = cookies['artec.token']
 
         if(token){
-            setUser({
-                name: 'Gabriel',
-                surname: 'Lima',
-                email: "gabriel12312@gmail.com"
+            api.get('/accounts/me').then(response => {
+
+                const user = response.data.user as User;
+
+                setUser(user)
+            }).catch(error => {
+                SignOut();
+
             })
-            /* api('sessions/me').then(response => {
-                setUser(response.data)
-            }) */
         } else {
             SignOut()
             
@@ -63,5 +65,5 @@ export function AuthContextProvider({ children }: AuthContextProviderProps){
 }
 
 export function SignOut(){
-
+    destroyCookie(null, 'artec.token');
 }

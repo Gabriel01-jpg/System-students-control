@@ -28,7 +28,7 @@ const Login = () => {
                     </Box>
                     
                 </Stack>
-                <Link>Esqueci minha senha.</Link>
+                <Link>Esqueci minha senhaaa.</Link>
 
             </Flex>
 

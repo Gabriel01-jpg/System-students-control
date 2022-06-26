@@ -3,9 +3,11 @@ import { CreateCourseUseCase } from "./createCourseUseCase";
 
 export class CreateCourseController{
     async handle(request: Request, response: Response){
-        const { course, pricing, type } = request.body;
+        const { course, price, type } = request.body;
+
         const createCourseUseCase = new CreateCourseUseCase();
-        const courseCreated = await createCourseUseCase.execute({ course, pricing, type });
+
+        const courseCreated = await createCourseUseCase.execute({ course, price, type });
 
         response.json({
             courseCreated

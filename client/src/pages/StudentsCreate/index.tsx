@@ -3,17 +3,7 @@ import {
     Flex,
     Heading,
     Button,
-    Icon,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    Checkbox,
-    Text,
     useBreakpointValue,
-    Spinner,
     Divider,
     SimpleGrid,
     VStack,
@@ -22,23 +12,58 @@ import {
     FormControl,
     FormLabel,
     Select
+} from "@chakra-ui/react";
 
-  } from "@chakra-ui/react";
-
-import { RiAddLine, RiRefreshLine } from "react-icons/ri";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Header } from "../../components/Header/Header";
 import Sidebar from "../../components/SideBar/SideBar";
 import { Link } from "react-router-dom";
+import { generateRandomPassword } from "../../utils/generateRandomPassword";
+import { api } from "../../services/api";
   
   
-  export default function StudentsCreate() {
+interface CourseProps {
+    id: string;
+    name: string;
+    price: string;
+    type: string;
+    createdAt: string;
+}
+
+
+export default function StudentsCreate() {
+
+    const [ passwordValue, setPasswordValue ] = useState('');
+    const [ courses, setCourses ] = useState<CourseProps[]>([]);
 
     const isWideVersion = useBreakpointValue({
       base: false,
       lg: true,
     });
+
+    function handleSetPassword(){
+        const password = generateRandomPassword(12)
+        setPasswordValue(password);
+
+    }
+
+    useEffect(() => {
+        api.get('/courses').then(response => {
+            let { courses } = response.data;
+            setCourses(courses.map((course: any) => {
+                return {
+                    id: course.id,
+                    name: course.name,
+                    type: course.tipo_curso,
+                    price: Number(course.valor_mensalidade).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL', minimumFractionDigits: 2}),
+                    createdAt: new Date(course.createdAt).toLocaleString('pt-BR', { dateStyle: 'long' })
+                }
+            }));
+        })
+
+
+    }, [])
     
     return (
       <Box>
@@ -72,10 +97,11 @@ import { Link } from "react-router-dom";
                     </FormControl>
                     <FormControl>
                         <FormLabel htmlFor='price'>Senha: </FormLabel>
-                        <Input id='price' type='text' name="price" bg="#FFF"/>
+                        <Input id='price' type='text' name="price" bg="#FFF" value={passwordValue}/>
                         <Button
                                 mt={2}
                                 colorScheme='blue'
+                                onClick={() => { handleSetPassword() }}
                             >
                                 Gerar senha forte
                             </Button>
@@ -86,10 +112,11 @@ import { Link } from "react-router-dom";
                 <FormControl>
                     <FormLabel htmlFor='type'>Curso do aluno:</FormLabel>
                     <Select id='type' placeholder='Selecione o curso' bg="#FFF">
-                        <option>Técnico em Eletrônica</option>
-                        <option>Técnico em Eletrotécnica</option>
-                        <option>Instalador de Energia</option>
-                        <option>Eletricista Industrial</option>
+                        {courses.map(course => {
+                            return (
+                                <option>{course.name}</option>
+                            )
+                        })}
                     </Select>
                     </FormControl>
                 </SimpleGrid>
